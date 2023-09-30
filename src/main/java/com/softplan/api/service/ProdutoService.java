@@ -20,22 +20,24 @@ public class ProdutoService {
 	public Produto cadastrar(DadosCadastroProduto dados) {
 		var produto = new Produto(dados);
 		repository.save(produto);
-		return produto;
+		return produto; 
 	}
 	
 	public List<DadosCadastroProduto> listar(){
 		return repository.findProdutosAtivos().stream().map(DadosCadastroProduto::new).toList();
 	}
 	
-	public void alterar(DadosCadastroProduto dados, Long id) {
+	public Produto alterar(DadosCadastroProduto dados, Long id) {
 		var produto = repository.getReferenceById(id);
 		produto.setNome(dados.nome());
 		produto.setDescricao(dados.descricao());
 		produto.setPreco(dados.preco());
+		return produto;
 	}
 	
-	public void deletar(Long id) {
+	public Produto deletar(Long id) {
 		var produto = repository.getReferenceById(id);
 		produto.setAtivo(false);
+		return produto;
 	}
 }
